@@ -4,7 +4,7 @@
             <h3>Listado de Tareas</h3>
         </div>
         <div class="col">
-            <button class="btn btn-primary float-end">Nueva Tarea</button>
+            <button class="btn btn-primary float-end" routerLink="/new">Nueva Tarea</button>
         </div>
     </div>
     <div class="row mb-3">
@@ -13,21 +13,21 @@
                 <thead class="table-dark">
                     <tr>
                         <th>Nombre</th>
-                        <th>Telefono</th>
-                        <th>Email</th>
+                        <th>Fecha de Realizacion</th>
+                        <th>Realizado</th>
                         <th>Acciones</th>
                     </tr>
                 </thead>
                 <tbody>
-                    <tr *ngIf="!contactos.length">
+                    <tr *ngIf="!tareas.length">
                         <td colspan="4" class="text-center">
-                            <h6>No hay contactos a mostrar</h6>
+                            <h6>No hay tareas a mostrar</h6>
                         </td>
                     </tr>
-                    <tr *ngFor="let contacto of contactos">
-                        <td>{{ contacto.nombre }}</td>
-                        <td>{{ contacto.telefono }}</td>
-                        <td>{{ contacto.email }}</td>
+                    <tr *ngFor="let tarea of tareas">
+                        <td>{{ tarea.nombre }}</td>
+                        <td>{{ tarea.fecha }}</td>
+                        <td>{{ tarea.realizado }}</td>
                         <td></td>
                     </tr>
                 </tbody>
