@@ -1,6 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
+import * as moment from 'moment';
 import { ITarea } from 'src/app/interfaces/ITarea';
+import { TareaService } from 'src/app/services/tarea.service';
 
 @Component({
   selector: 'app-contacto-form',
@@ -8,24 +11,29 @@ import { ITarea } from 'src/app/interfaces/ITarea';
   styleUrls: ['./contacto-form.component.css']
 })
 export class ContactoFormComponent implements OnInit {
-  tareaForm!: FormGroup
+  tareaForm: FormGroup
 
   constructor(
-    private fb: FormBuilder
+    private tareaService: TareaService,
+    private activeModal: NgbActiveModal,
   ) {
-    this.tareaForm = this.fb.group({
-      nombre: ['', Validators.required],
-      fecha: [new Date(), Validators.required],
-      descripcion: ['', Validators.maxLength(255)],
+    this.tareaForm = new FormGroup({
+      nombre: new FormControl(null, [Validators.required]),
+      fecha: new FormControl(moment().format('YYYY-MM-DD'), [Validators.required]),
+      descripcion: new FormControl(null, [Validators.nullValidator])
     })
   }
   ngOnInit(): void {
   }
 
   setTarea() {
-    // console.log(this.tareaForm)
     const tarea: ITarea = {...this.tareaForm.value, realizado: false}
-    console.log(tarea)
+    this.tareaService.tarea$.emit(tarea)
+    this.activeModal.close()
+  }
+
+  closeModal() {
+    this.activeModal.close()
   }
 
 }

@@ -1,4 +1,4 @@
-<div class="card mt-3 p-3">
+<div class="card p-3">
     <div class="row">
         <div class="col">
             <h3>Nueva Tarea</h3>
@@ -11,23 +11,29 @@
                     <div class="form-floating">
                         <input formControlName="nombre" type="text" id="tarea-nombre" class="form-control" placeholder="Nombre de Tarea">
                         <label for="tarea-nombre">Nombre de Tarea</label>
+                        <span *ngIf="tareaForm.controls['nombre'].touched && tareaForm.controls['nombre'].hasError('required')" class="text-danger">
+                            El campo <strong>nombre</strong> no puede estar vacio.
+                        </span>
                     </div>
                 </div>
                 <div class="col">
                     <div class="form-floating">
                         <input formControlName="fecha" type="date" id="tarea-fecha" class="form-control" placeholder="Fecha de Realizacion">
                         <label for="tarea-fecha">Fecha de Realizacion</label>
+                        <span *ngIf="tareaForm.controls['fecha'].touched && tareaForm.controls['fecha'].hasError('required')" class="text-danger">
+                            El campo <strong>fecha</strong> no puede estar vacio.
+                        </span>
                     </div>
                 </div>
             </div>
             <div class="form-floating mb-3">
                 <textarea formControlName="descripcion" class="form-control" rows="5" id="tarea-texto" placeholder="Descripcion"></textarea>
-                <label for="tarea-text">Descripcion</label>
+                <label for="tarea-text">Descripcion (opcional)</label>
             </div>
             <div class="row">
                 <div class="col">
                     <button type="submit" class="btn btn-primary float-end">Guardar</button>
-                    <button type="button" class="btn btn-danger" routerLink="/">Cancelar</button>
+                    <button type="button" class="btn btn-danger" (click)="closeModal()">Cancelar</button>
                 </div>
             </div>
         </form>
