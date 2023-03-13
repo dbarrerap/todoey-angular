@@ -1,1 +1,35 @@
-<p>contacto-form works!</p>
+<div class="card mt-3 p-3">
+    <div class="row">
+        <div class="col">
+            <h3>Nueva Tarea</h3>
+        </div>
+    </div>
+    <div class="row">
+        <form [formGroup]="tareaForm" (ngSubmit)="setTarea()">
+            <div class="row mb-3">
+                <div class="col">
+                    <div class="form-floating">
+                        <input formControlName="nombre" type="text" id="tarea-nombre" class="form-control" placeholder="Nombre de Tarea">
+                        <label for="tarea-nombre">Nombre de Tarea</label>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="form-floating">
+                        <input formControlName="fecha" type="date" id="tarea-fecha" class="form-control" placeholder="Fecha de Realizacion">
+                        <label for="tarea-fecha">Fecha de Realizacion</label>
+                    </div>
+                </div>
+            </div>
+            <div class="form-floating mb-3">
+                <textarea formControlName="descripcion" class="form-control" rows="5" id="tarea-texto" placeholder="Descripcion"></textarea>
+                <label for="tarea-text">Descripcion</label>
+            </div>
+            <div class="row">
+                <div class="col">
+                    <button type="submit" class="btn btn-primary float-end">Guardar</button>
+                    <button type="button" class="btn btn-danger" routerLink="/">Cancelar</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
