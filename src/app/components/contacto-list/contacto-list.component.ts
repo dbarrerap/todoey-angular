@@ -4,6 +4,7 @@ import { TareaService } from 'src/app/services/tarea.service';
 import { NgbModal, NgbPaginationModule } from '@ng-bootstrap/ng-bootstrap';
 import { ContactoFormComponent } from '../contacto-form/contacto-form.component';
 import { Paginator } from 'src/app/models/Paginator';
+import { faCircle } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
   selector: 'app-contacto-list',
@@ -11,6 +12,7 @@ import { Paginator } from 'src/app/models/Paginator';
   styleUrls: ['./contacto-list.component.css']
 })
 export class ContactoListComponent implements OnInit {
+  faCircle = faCircle
   tareas: ITarea[] = []
 
   constructor(
@@ -25,7 +27,7 @@ export class ContactoListComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.tareaService.initPaginator(new Paginator("id", 7))
+    this.tareaService.initPaginator(new Paginator("id", 10))
 
     setTimeout(() => {
       this.getTareas()
@@ -39,7 +41,7 @@ export class ContactoListComponent implements OnInit {
   getTareas() {
     this.tareaService.getTareas(`?paginate=1&size=${this.tareaService.paginator.per_page}&page=${this.tareaService.paginator.current_page}`)?.subscribe(
       (res: any) => {
-        console.log(res)
+        // console.log(res)
         const { per_page, current_page, last_page, from, to, total } = res
         this.tareas = (current_page == 1) ? res.data : Object.values(res.data)
         Object.assign(

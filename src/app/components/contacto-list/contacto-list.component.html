@@ -9,7 +9,7 @@
     </div>
     <div class="row mb-3">
         <div class="col">
-            <table class="table table-hover mb-3">
+            <table class="table table-hover table-sm mb-3">
                 <thead class="table-dark">
                     <tr>
                         <th>#</th>
@@ -29,7 +29,7 @@
                         <td>{{ tarea.id }}</td>
                         <td>{{ tarea.nombre }}</td>
                         <td>{{ tarea.fecha }}</td>
-                        <td>{{ tarea.realizado }}</td>
+                        <td><fa-icon [icon]="faCircle" [ngClass]="{'text-success': tarea.realizado == true, 'text-danger': tarea.realizado == false}"></fa-icon></td>
                         <td></td>
                     </tr>
                 </tbody>

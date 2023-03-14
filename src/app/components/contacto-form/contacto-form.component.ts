@@ -28,8 +28,16 @@ export class ContactoFormComponent implements OnInit {
 
   setTarea() {
     const tarea: ITarea = {...this.tareaForm.value, realizado: false}
-    this.tareaService.tarea$.emit(tarea)
-    this.activeModal.close()
+    // Usar API para guardar, emitir respuesta
+    this.tareaService.setTarea(tarea)?.subscribe(
+      (res: any) => {
+        this.tareaService.tarea$.emit(res)
+        this.activeModal.close()
+      },
+      (err: any) => {
+        console.log(err)
+      }
+    )
   }
 
   closeModal() {
