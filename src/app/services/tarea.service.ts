@@ -1,4 +1,5 @@
 import { EventEmitter, Injectable } from '@angular/core';
+import { IPaginator } from '../interfaces/IPaginator';
 import { ITarea } from '../interfaces/ITarea';
 import { ApiService } from './api.service';
 
@@ -6,12 +7,21 @@ import { ApiService } from './api.service';
   providedIn: 'root'
 })
 export class TareaService {
+  public paginator!: IPaginator;
+
   constructor(
     private apiService: ApiService
   ) { }
 
+  // Modal
   tarea$ = new EventEmitter<ITarea>();
 
+  // Paginacion
+  initPaginator(payload: any) {
+    this.paginator = payload
+  }
+
+  // Api
   getTareas(params: string) {
     return this.apiService.apiCall(`tarea${params}`, 'GET', {})
   }
