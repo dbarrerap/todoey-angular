@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import * as moment from 'moment';
@@ -11,6 +11,7 @@ import { TareaService } from 'src/app/services/tarea.service';
   styleUrls: ['./contacto-form.component.css']
 })
 export class ContactoFormComponent implements OnInit {
+  @Input() tarea!: ITarea
   tareaForm: FormGroup
 
   constructor(
@@ -18,26 +19,45 @@ export class ContactoFormComponent implements OnInit {
     private activeModal: NgbActiveModal,
   ) {
     this.tareaForm = new FormGroup({
+      realizado: new FormControl(false),
       nombre: new FormControl(null, [Validators.required]),
       fecha: new FormControl(moment().format('YYYY-MM-DD'), [Validators.required]),
       descripcion: new FormControl(null, [Validators.nullValidator])
     })
   }
   ngOnInit(): void {
+    if (this.tarea) {
+      this.tareaForm.patchValue({...this.tarea, realizado: this.tarea.realizado == true})
+    }
   }
 
   setTarea() {
-    const tarea: ITarea = {...this.tareaForm.value, realizado: false}
-    // Usar API para guardar, emitir respuesta
-    this.tareaService.setTarea(tarea)?.subscribe(
-      (res: any) => {
-        this.tareaService.tarea$.emit(res)
-        this.activeModal.close()
-      },
-      (err: any) => {
-        console.log(err)
-      }
-    )
+    if (this.tarea.id != null) {
+      const tarea: ITarea = { ...this.tareaForm.value }
+      this.tareaService.updateTarea(this.tarea.id, this.tareaForm.value)?.subscribe(
+        (res: any) => {
+          // console.log(res)
+          this.tareaService.updated$.emit()
+          this.activeModal.close()
+        },
+        (err: any) => {
+          console.log(err)
+        }
+      )
+    } else {
+      const tarea: ITarea = {...this.tareaForm.value}
+      // Usar API para guardar, emitir respuesta
+      this.tareaService.setTarea(tarea)?.subscribe(
+        (res: any) => {
+          this.tareaService.tarea$.emit(res)
+          this.activeModal.close()
+        },
+        (err: any) => {
+          console.log(err)
+        }
+      )
+    }
+    
   }
 
   closeModal() {

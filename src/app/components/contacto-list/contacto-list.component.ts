@@ -26,6 +26,8 @@ export class ContactoListComponent implements OnInit {
         this.tareas.push(tarea)
       }
     )
+
+    this.tareaService.updated$.subscribe(() => this.getTareas())
   }
 
   ngOnInit(): void {
@@ -79,5 +81,10 @@ export class ContactoListComponent implements OnInit {
         console.log(err)
       }
     )
+  }
+
+  viewTarea(tarea: ITarea) {
+    const modal = this.modalService.open(ContactoFormComponent, {size: 'lg', backdrop: 'static'})
+    modal.componentInstance.tarea = tarea
   }
 }

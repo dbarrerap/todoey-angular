@@ -15,6 +15,7 @@ export class TareaService {
 
   // Modal
   tarea$ = new EventEmitter<ITarea>();
+  updated$ = new EventEmitter<ITarea>();
 
   // Paginacion
   initPaginator(payload: any) {
