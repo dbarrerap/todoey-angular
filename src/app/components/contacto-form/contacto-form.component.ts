@@ -32,7 +32,7 @@ export class ContactoFormComponent implements OnInit {
   }
 
   setTarea() {
-    if (this.tarea.id != null) {
+    if (this.tarea?.id != null) {
       const tarea: ITarea = { ...this.tareaForm.value }
       this.tareaService.updateTarea(this.tarea.id, this.tareaForm.value)?.subscribe(
         (res: any) => {
