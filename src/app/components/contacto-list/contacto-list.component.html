@@ -30,7 +30,14 @@
                         <td>{{ tarea.nombre }}</td>
                         <td>{{ tarea.fecha }}</td>
                         <td><fa-icon [icon]="faCircle" [ngClass]="{'text-success': tarea.realizado == true, 'text-danger': tarea.realizado == false}"></fa-icon></td>
-                        <td></td>
+                        <td>
+                            <button class="btn btn-sm btn-warning">
+                                <fa-icon [icon]="faEye"></fa-icon>
+                            </button>
+                            <button class="btn btn-sm btn-outline-danger ms-2" (click)="deleteTarea(tarea)">
+                                <fa-icon [icon]="faTrashAlt"></fa-icon>
+                            </button>
+                        </td>
                     </tr>
                 </tbody>
             </table>

@@ -4,7 +4,7 @@ import { TareaService } from 'src/app/services/tarea.service';
 import { NgbModal, NgbPaginationModule } from '@ng-bootstrap/ng-bootstrap';
 import { ContactoFormComponent } from '../contacto-form/contacto-form.component';
 import { Paginator } from 'src/app/models/Paginator';
-import { faCircle } from '@fortawesome/free-solid-svg-icons';
+import { faCircle, faEye, faTrashAlt } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
   selector: 'app-contacto-list',
@@ -13,6 +13,8 @@ import { faCircle } from '@fortawesome/free-solid-svg-icons';
 })
 export class ContactoListComponent implements OnInit {
   faCircle = faCircle
+  faEye = faEye
+  faTrashAlt = faTrashAlt
   tareas: ITarea[] = []
 
   constructor(
@@ -65,5 +67,17 @@ export class ContactoListComponent implements OnInit {
   onPaginateEvent(event: any) {
     Object.assign(this.tareaService.paginator, { current_page: event })
     this.getTareas()
+  }
+
+  deleteTarea(tarea: ITarea) {
+    this.tareaService.deleteTarea(tarea.id!)?.subscribe(
+      (res: any) => {
+        // console.log(res)
+        this.tareas = this.tareas.filter(e => e.id != tarea.id)
+      },
+      (err: any) => {
+        console.log(err)
+      }
+    )
   }
 }
